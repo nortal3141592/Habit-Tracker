@@ -30,3 +30,16 @@ class TrackerResponse(BaseModel):
 
     start_date: date | None
     created_at: datetime
+
+class HabitCreate(BaseModel):
+    name: str = Field(min_length=1)
+
+
+class HabitResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    tracker_id: int
+    name: str
+    created_at: datetime
+    archived_at: datetime | None

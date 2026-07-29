@@ -7,7 +7,7 @@ from core.exceptions import AppException, app_exception_handler
 
 from core.database import engine, Base
 
-from routers import trackers
+from routers import trackers, habits
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
@@ -30,3 +30,4 @@ app.add_middleware(
 )
 
 app.include_router(trackers.router, prefix="/api/trackers", tags=["Trackers"])
+app.include_router(habits.router, prefix="/api/habits", tags=["Habits"])
