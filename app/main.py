@@ -1,9 +1,12 @@
 from contextlib import asynccontextmanager
+from typing import cast
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.exceptions import RequestValidationError
+from starlette.types import ExceptionHandler
 from core.config import settings
-from core.exceptions import AppException, app_exception_handler, unhandled_exception_handler
+from core.exceptions import AppException, app_exception_handler, unhandled_exception_handler, validation_exception_handler
 
 from core.database import engine, Base
 
@@ -21,6 +24,7 @@ app = FastAPI(lifespan=lifespan)
 
 app.add_exception_handler(AppException, app_exception_handler)
 app.add_exception_handler(Exception, unhandled_exception_handler)
+app.add_exception_handler(RequestValidationError, cast(ExceptionHandler, validation_exception_handler))
 
 app.add_middleware(
     CORSMiddleware,

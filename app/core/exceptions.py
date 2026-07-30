@@ -5,6 +5,8 @@ from fastapi.responses import JSONResponse
 
 import logging
 
+from fastapi.exceptions import RequestValidationError
+
 logger = logging.getLogger("habit_tracker")
 
 
@@ -51,4 +53,15 @@ async def unhandled_exception_handler(request: Request, exc: Exception) -> JSONR
     return JSONResponse(
         status_code=500,
         content={"detail": "An unexpected error occurred.", "error_code": "internal_error"},
+    )
+
+async def validation_exception_handler(request: Request, exc: RequestValidationError) -> JSONResponse:
+    first_error = exc.errors()[0]
+    field = ".".join(str(loc) for loc in first_error["loc"] if loc != "body")
+    message = f"{field}: {first_error['msg']}" if field else first_error["msg"]
+
+
+    return JSONResponse(
+        status_code=422,
+        content={"detail": message, "error_code": ErrorCode.VALIDATION_ERROR},
     )

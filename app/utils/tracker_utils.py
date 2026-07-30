@@ -58,8 +58,8 @@ async def list_trackers(db: AsyncSession):
     result = await db.execute(select(Tracker).order_by(Tracker.created_at.desc()))
     trackers = result.scalars().all()
 
-    if not trackers:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='No trackers found')
+    # if not trackers:
+    #     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='No trackers found')
 
     return trackers
 
