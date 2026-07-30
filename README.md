@@ -120,76 +120,13 @@ http://localhost:5173
 # How to use
 Make sure to finish the initial setup, only then you can use it
 
-## Development scripts(Recommended)
-
-The project includes convenience scripts that start both the FastAPI backend and Vite frontend together.
-
-### `dev.sh` — macOS, Linux & WSL
-
-Run from the repository root:
-
-```bash
-./dev.sh
-```
-
-On macOS/Linux, you may need to make it executable once:
-
-```bash
-chmod +x dev.sh
-```
-
----
-
-### `dev.ps1` — Windows PowerShell
-
-**Supported on:**
-
-* Windows PowerShell
-* PowerShell 7+
-
-Run from the repository root:
-
-```powershell
-.\dev.ps1
-```
-
-**What it does:**
-
-* Starts the FastAPI backend with `uv`
-* Starts the Vite development server
-* Runs both processes together
-* Stops both processes when the script exits
-
-The services run at:
-
-```text
-Backend   → http://localhost:8000
-Frontend  → http://localhost:5173
-```
-
-### Which one should I use?
-
-| Operating system     | Script      |
-| -------------------- | ----------- |
-| macOS                | `./dev.sh`  |
-| Linux                | `./dev.sh`  |
-| Windows + WSL        | `./dev.sh`  |
-| Windows + PowerShell | `.\dev.ps1` |
-
-Both scripts are simply convenience wrappers around the normal backend and frontend development commands. They do **not** add any extra services or dependencies.
-
-
-Once setup is complete, you only need **two terminals**.
-
-**If you want to use it manualy, you can follow the steps written below**
-
 ## 1. Start the backend
 
 From the repository root:
 
 ```bash
 cd app
-uv run uvicorn app.main:app --reload
+uv run fastapi dev main.py
 ```
 
 Backend:
