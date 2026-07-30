@@ -3,6 +3,10 @@ from enum import StrEnum
 from fastapi import Request
 from fastapi.responses import JSONResponse
 
+import logging
+
+logger = logging.getLogger("habit_tracker")
+
 
 class ErrorCode(StrEnum):
     NOT_FOUND = "not_found"
@@ -40,4 +44,11 @@ async def app_exception_handler(request: Request, exc: Exception) -> JSONRespons
     return JSONResponse(
         status_code=exc.status_code,
         content={"detail": exc.detail, "error_code": exc.error_code},
+    )
+
+async def unhandled_exception_handler(request: Request, exc: Exception) -> JSONResponse:
+    logger.exception("Unhandled exception on %s %s", request.method, request.url.path)
+    return JSONResponse(
+        status_code=500,
+        content={"detail": "An unexpected error occurred.", "error_code": "internal_error"},
     )

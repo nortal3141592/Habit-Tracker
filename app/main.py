@@ -3,11 +3,11 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from core.config import settings
-from core.exceptions import AppException, app_exception_handler
+from core.exceptions import AppException, app_exception_handler, unhandled_exception_handler
 
 from core.database import engine, Base
 
-from routers import trackers, habits
+from routers import trackers, habits, matrix
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
@@ -20,6 +20,7 @@ async def lifespan(_app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 
 app.add_exception_handler(AppException, app_exception_handler)
+app.add_exception_handler(Exception, unhandled_exception_handler)
 
 app.add_middleware(
     CORSMiddleware,
@@ -31,3 +32,4 @@ app.add_middleware(
 
 app.include_router(trackers.router, prefix="/api/trackers", tags=["Trackers"])
 app.include_router(habits.router, prefix="/api/habits", tags=["Habits"])
+app.include_router(matrix.router, prefix="/api/trackers", tags=["Matrix"])
