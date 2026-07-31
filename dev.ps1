@@ -8,7 +8,7 @@ $FrontendDir = "habit-tracker-frontend"
 Write-Host "Starting backend..."
 $backendJob = Start-Job -ScriptBlock {
     Set-Location $using:PWD
-    uv run uvicorn app.main:app --reload
+    uv run fastapi dev app/main.py
 }
 
 Write-Host "Starting frontend..."
