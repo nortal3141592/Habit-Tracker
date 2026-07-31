@@ -9,7 +9,7 @@ set -e
 
 FRONTEND_DIR="habit-tracker-frontend"
 
-BACKEND_CMD="uv run uvicorn app.main:app --reload"
+BACKEND_CMD="uv run fastapi dev app/main.py"
 
 echo "Starting backend..."
 $BACKEND_CMD &
